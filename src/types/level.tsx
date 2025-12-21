@@ -1,0 +1,1 @@
+export type Nivel = 'iniciante' | 'intermediario' | 'rachao';
