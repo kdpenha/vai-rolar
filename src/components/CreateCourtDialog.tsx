@@ -92,8 +92,10 @@ export default function CreateCourtDialog({ open, onOpenChange, onCreated }: Pro
       }
 
       const label = await getLabel(coords.lat, coords.lng);
+      const now = new Date();
+      const dataHoraDate = new Date(dataHora);
 
-      if (!isLive && dataHora < new Date().toISOString()) {
+      if (!isLive && dataHoraDate < now) {
         toast({ title: 'Só é possível marcar basquetes futuros' });
         setLoading(false);
         return;
