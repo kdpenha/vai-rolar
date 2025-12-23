@@ -131,7 +131,7 @@ export default function CourtCard({ court, attendances, isAttending, isOwner, on
         </CardHeader>
         
         <CardContent className="space-y-2 pb-2">
-          { court.status == 'scheduled' && (
+          { court.status == 'scheduled' && court.data_hora > new Date().toISOString() && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{format(dateTime, "EEEE, d 'de' MMMM", { locale: ptBR })}</span>
@@ -139,7 +139,17 @@ export default function CourtCard({ court, attendances, isAttending, isOwner, on
           )}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="h-4 w-4" />
-            <span>{ court.status == 'live' && (<span className='font-black text-green-400 animate-pulse duration-500'>ROLANDO DESDE </span>) }{format(dateTime, 'HH:mm')}</span>
+            <span>
+              {(court.status === 'live' ||
+                (court.status === 'scheduled' &&
+                court.data_hora <= new Date().toISOString())) && (
+                  <span className="font-black text-green-400 animate-pulse duration-500">
+                    ROLANDO DESDE{' '}
+                  </span>
+              )}
+              {format(dateTime, 'HH:mm')}
+            </span>
+
           </div>
           {court.latitude && court.longitude && (
             <a 

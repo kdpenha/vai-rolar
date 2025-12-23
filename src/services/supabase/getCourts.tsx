@@ -9,12 +9,10 @@ export async function getCourts(page: number, limit: number, status: string, fil
   const to = from + limit - 1;
 
   const ascending = dateFilter == 'maisProximos' || dateFilter == undefined ? true : false;
-  console.log(dateFilter, searchTerm)
 
   let courtsQuery = supabase
     .from('courts')
     .select('*', { count: 'exact' })
-    .eq('status', status)
     .range(from, to);
 
     if (searchTerm) {
@@ -23,12 +21,21 @@ export async function getCourts(page: number, limit: number, status: string, fil
       );
     }
 
+    const now = new Date().toISOString();
+
     if (status === 'scheduled') {
-      const now = new Date().toISOString();
+      courtsQuery = courtsQuery.eq('status', 'scheduled');
       courtsQuery = courtsQuery.gte('data_hora', now);
       courtsQuery = courtsQuery.order('data_hora', { ascending: ascending, nullsFirst: false })
     } else {
-      courtsQuery = courtsQuery.order('started_at', { ascending: !ascending, nullsFirst: false })
+      courtsQuery = courtsQuery.or(
+        `status.eq.live,and(status.eq.scheduled,data_hora.lte.${now})`
+      );
+
+      courtsQuery = courtsQuery.order('started_at', {
+        ascending: !ascending,
+        nullsFirst: false
+      });
     }
 
   const [courtsRes, attendancesRes] = await Promise.all([
