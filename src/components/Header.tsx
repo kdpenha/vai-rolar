@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { Button } from "./ui/button"
-import { Plus, User, LogOut } from 'lucide-react';
+import { MessageCircle, User, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   profileOpen: boolean;
@@ -15,9 +15,9 @@ export default function Header({ profileOpen, setProfileOpen, signOut }: HeaderP
                 <div>
                     <Link to={'/'} className="flex items-center gap-2">
                     <img
-                    src="/logo-img/jogador-de-basquete.png"
+                    src="/logo-img/logotipo.png"
                     alt="Logo de Jogador de Basquete"
-                    className="h-8 w-8"
+                    className="h-10 w-10"
                     />
                     <h1 className="text-2xl font-bold">Vai Rolar?</h1>
                     </Link>
@@ -28,7 +28,9 @@ export default function Header({ profileOpen, setProfileOpen, signOut }: HeaderP
                         to="/contato"
                         className="text-sm font-medium opacity-90 hover:opacity-100 transition"
                     >
-                        Contato
+                        <Button variant="ghost" size="icon">
+                            <MessageCircle className="h-5 w-5" />
+                        </Button>
                     </Link>
                     <Button variant="ghost" size="icon" onClick={() => setProfileOpen(true)}>
                     <User className="h-5 w-5" />

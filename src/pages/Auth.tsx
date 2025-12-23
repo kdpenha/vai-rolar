@@ -57,7 +57,7 @@ export default function Auth() {
     } else {
       toast({
         title: 'Conta criada!',
-        description: 'Verifique seu email para confirmar (ou desative a confirmação no Supabase).'
+        description: 'Verifique seu email para confirmar.'
       });
     }
     setLoading(false);
@@ -68,11 +68,10 @@ export default function Auth() {
       <Card className="w-full max-w-md border-primary/20">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-orange-700 rounded-full p-4">
-              <img src="/logo-img/jogador-de-basquete-64.png" alt="Logo de Jogador de Basquete" />
+            <div className="rounded-full w-40 border border-primary/40">
+              <img className='w-60' src="/logo-img/logotipo.png" alt="Logo de Jogador de Basquete" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-bold text-primary">Vai Rolar?</CardTitle>
           <CardDescription>Descubra basquetes rolando perto de você</CardDescription>
         </CardHeader>
         <CardContent>
