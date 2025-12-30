@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import ContactPage from "./pages/ContactPage";
+import NewPassword from "./pages/NewPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import FooterSection from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +54,9 @@ const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
     <Route path="/auth" element={<PublicRoute><Auth /></PublicRoute>} />
-    <Route path="/contato" element={<ProtectedRoute><ContactPage /></ProtectedRoute>} />
+    <Route path="/reset-password" element={<NewPassword />} />
+    <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+    <Route path="/contato" element={<ContactPage />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
@@ -64,6 +69,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <AppRoutes />
+          <FooterSection/>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

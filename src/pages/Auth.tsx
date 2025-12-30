@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -105,6 +105,9 @@ export default function Auth() {
                     required
                   />
                 </div>
+                <div className='space-y-1'>
+                  <Link to={'/forgot-password'} className='text-sm text-gray-500'>Esqueci minha senha</Link>
+                </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? 'Entrando...' : 'Entrar'}
                 </Button>
@@ -154,6 +157,12 @@ export default function Auth() {
             </TabsContent>
           </Tabs>
         </CardContent>
+
+        
+        <div className='text-sm text-gray-300 pb-4 px-4'>
+          <Link to={'/contato'}>Precisa de ajuda? Clique aqui!</Link>
+        </div>
+
       </Card>
     </div>
   );

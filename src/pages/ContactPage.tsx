@@ -8,7 +8,7 @@ import { Linkedin, Instagram } from 'lucide-react';
 
 export default function ContactPage() {
   const {
-      signOut
+    signOut
   } = useAuth();
 
   const [profileOpen, setProfileOpen] = useState(false);
