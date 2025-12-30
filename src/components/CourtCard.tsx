@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
-import { Calendar, Clock, MapPin, Users, Trash2, Edit, PowerOff } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Trash2, Edit, PowerOff, User } from 'lucide-react';
 import EditCourtDialog from './EditCourtDialog';
 import AttendeesDialog from './AttendeesDialog';
 import DeleteCourt from './DeleteCourt';
@@ -15,6 +15,7 @@ import { Nivel } from '@/types/level';
 import { Court } from '@/types/court';
 import { Attendance } from '@/types/attendance';
 import FinishCourt from './FinishCourt';
+import { getUser } from '@/services/supabase/getUser';
 
 interface Props {
   court: Court;
@@ -44,6 +45,17 @@ export default function CourtCard({ court, attendances, isAttending, isOwner, on
   const [ isLive, setIsLive ] = useState(court.status === 'live');
   const [ isFinished, setIsFinished ] = useState(false);
   const { user } = useAuth();
+  const [ creator, setCreator ] = useState('')
+
+  useEffect( () => {
+    if (!user?.id) return;
+
+    getUser(user.id).then( ({ creator }) => {
+      if(!creator.error && creator.data?.length) {
+        setCreator(creator.data[0].nome)
+      }
+    })
+  }, [])
 
   const handleJoin = async () => {
     if (!user) return;
@@ -150,6 +162,11 @@ export default function CourtCard({ court, attendances, isAttending, isOwner, on
               {format(dateTime, 'HH:mm')}
             </span>
 
+          </div>
+
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <User className="h-4 w-4"/>
+            <span>Criado por <span className='font-bold'>{ creator }</span></span>
           </div>
           {court.latitude && court.longitude && (
             <a 
