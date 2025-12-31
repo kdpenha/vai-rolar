@@ -1,11 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { User } from 'lucide-react';
-
-interface Attendance {
-  court_id: string;
-  user_id: string;
-  nome: string | null;
-}
+import { Attendance } from '@/types/attendance';
 
 interface Props {
   attendances: Attendance[];
@@ -14,6 +9,8 @@ interface Props {
 }
 
 export default function AttendeesDialog({ attendances, open, onOpenChange }: Props) {
+  const positions = ['PG', 'SG', 'SF', 'PF', 'C']
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-sm">
@@ -32,7 +29,7 @@ export default function AttendeesDialog({ attendances, open, onOpenChange }: Pro
                 <div className="bg-primary/10 rounded-full p-2">
                   <User className="h-4 w-4 text-primary" />
                 </div>
-                <span>{a.nome || 'Usuário'}</span>
+                <span>{a.nome || 'Usuário'} <span className="border border-orange-500 text-xs font-medium px-1 py-1 rounded-sm bg-fuchsia-900">{positions[a.position - 1]}</span></span>
               </li>
             ))}
           </ul>

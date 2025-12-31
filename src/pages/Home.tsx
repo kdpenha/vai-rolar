@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -9,6 +9,7 @@ import LiveList from '@/components/LiveList';
 import ProfileDialog from '@/components/ProfileDialog';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
+import Changelog from '@/components/Changelog';
 
 export default function Home() {
   const {
@@ -16,6 +17,22 @@ export default function Home() {
   } = useAuth();
   const [createOpen, setCreateOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [ showChangelog, setShowChangelog ] = useState(false)
+  const CHANGELOG_VERSION = '31-12-20251';
+
+  useEffect(() => {
+    const seen = localStorage.getItem('changelog_seen');
+
+    if (seen !== CHANGELOG_VERSION) {
+      setShowChangelog(true);
+    }
+  }, []);
+
+  const closeModal = () => {
+    localStorage.setItem('changelog_seen', CHANGELOG_VERSION);
+    setShowChangelog(false);
+  };
+
   return <div className="min-h-screen bg-background">
       <Header profileOpen={profileOpen} setProfileOpen={setProfileOpen} signOut={signOut} />
 
@@ -44,5 +61,10 @@ export default function Home() {
 
       <CreateCourtDialog open={createOpen} onOpenChange={setCreateOpen} />
       <ProfileDialog open={profileOpen} onOpenChange={setProfileOpen} />
+
+      {showChangelog && (
+        <Changelog closeModal={closeModal}/>
+      )}
+
     </div>;
 }

@@ -36,8 +36,9 @@ export default function Header({ profileOpen, setProfileOpen, signOut }: HeaderP
                                 <MessageCircle className="h-5 w-5" />
                             </Button>
                         </Link>
-                        <Button variant="ghost" size="icon" onClick={() => setProfileOpen(true)}>
+                        <Button variant="ghost" size="icon" onClick={() => setProfileOpen(true)} className="flex flex-col gap-0">
                         <User className="h-5 w-5" />
+                        <span className="border border-blue-500 text-xs font-medium px-1 py-1 rounded-sm bg-fuchsia-900">Novo</span>
                         </Button>
                         <Button variant="ghost" size="icon" onClick={signOut}>
                         <LogOut className="h-5 w-5" />

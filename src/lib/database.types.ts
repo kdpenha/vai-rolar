@@ -82,16 +82,19 @@ export interface Database {
         Row: {
           id: string
           nome: string
+          position: number
           created_at: string
         }
         Insert: {
           id: string
           nome: string
+          position: number
           created_at?: string
         }
         Update: {
           id?: string
           nome?: string
+          position: number
           created_at?: string
         }
         Relationships: []

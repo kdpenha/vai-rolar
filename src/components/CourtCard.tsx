@@ -48,9 +48,9 @@ export default function CourtCard({ court, attendances, isAttending, isOwner, on
   const [ creator, setCreator ] = useState('')
 
   useEffect( () => {
-    if (!user?.id) return;
+    if (!court?.criado_por) return;
 
-    getUser(user.id).then( ({ creator }) => {
+    getUser(court.criado_por).then( ({ creator }) => {
       if(!creator.error && creator.data?.length) {
         setCreator(creator.data[0].nome)
       }

@@ -12,6 +12,7 @@ import { getCourts } from '@/services/supabase/getCourts';
 import CourtListDisplay from './CourtListDisplay';
 import FilterDropdown from './FIlterDropdown';
 import { CourtFilters } from '@/types/courtFilters';
+import { getAttendancesWithProfiles } from '@/services/supabase/getAttendancesWithProfiles';
 
 export default function CourtsList() {
   const [ courts, setCourts ] = useState<Court[]>([]);
@@ -39,13 +40,14 @@ export default function CourtsList() {
 
     if (attendancesRes.data) {
       const userIds = [...new Set(attendancesRes.data.map(a => a.user_id))];
-      const { data: profiles } = await supabase.from('profiles').select('id, nome').in('id', userIds);
-      const profileMap = new Map(profiles?.map(p => [p.id, p.nome]) || []);
+      const { data: profiles } = await supabase.from('profiles').select('id, nome, position').in('id', userIds);
+      const profileMap = await getAttendancesWithProfiles(userIds)
 
       setAttendances(attendancesRes.data.map(a => ({
         court_id: a.court_id,
         user_id: a.user_id,
-        nome: profileMap.get(a.user_id) || null
+        nome: profileMap.get(a.user_id)?.nome || null,
+        position: profileMap.get(a.user_id)?.position || null
       })));
     }
 

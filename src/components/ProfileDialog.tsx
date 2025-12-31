@@ -14,6 +14,7 @@ interface Props {
 
 export default function ProfileDialog({ open, onOpenChange }: Props) {
   const [nome, setNome] = useState('');
+  const [position, setPosition] = useState(1)
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
@@ -21,11 +22,12 @@ export default function ProfileDialog({ open, onOpenChange }: Props) {
     if (open && user) {
       supabase
         .from('profiles')
-        .select('nome')
+        .select('nome, position')
         .eq('id', user.id)
         .maybeSingle()
         .then(({ data }) => {
           if (data) setNome(data.nome);
+          if (data) setPosition(data.position);
         });
     }
   }, [open, user]);
@@ -37,7 +39,7 @@ export default function ProfileDialog({ open, onOpenChange }: Props) {
 
     const { error } = await supabase
       .from('profiles')
-      .upsert({ id: user.id, nome });
+      .upsert({ id: user.id, nome, position });
 
     if (error) {
       toast({ title: 'Erro', description: error.message, variant: 'destructive' });
@@ -70,6 +72,24 @@ export default function ProfileDialog({ open, onOpenChange }: Props) {
               onChange={(e) => setNome(e.target.value)}
               required
             />
+          </div>
+      
+          <div className='space-y-2'>
+            <label htmlFor="position" className="block text-sm font-medium text-white-700 mb-1">
+              Posição <span className="border border-orange-500 text-xs font-medium px-1 py-1 rounded-sm bg-orange-600">Novo</span>
+            </label>
+            <select
+              id="position"
+              value={position}
+              onChange={(e) => {setPosition(Number(e.target.value))}}
+              className="block w-full rounded-md text-sm font-medium border border-gray-300 bg-card py-2 px-5 shadow-sm focus:border-orange-500 focus:ring focus:ring-orange-500 focus:ring-opacity-50"
+            >
+              <option value="1">Armador</option>
+              <option value="2">Ala-Armador</option>
+              <option value="3">Ala</option>
+              <option value="4">Ala-Pivô</option>
+              <option value="5">Pivô</option>
+            </select>
           </div>
 
           <Button type="submit" className="w-full" disabled={loading}>
