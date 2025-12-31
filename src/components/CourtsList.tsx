@@ -80,13 +80,13 @@ export default function CourtsList() {
         fetchData={fetchData}
       />
 
-      {/* {totalPages > 1 && courts.length > 0 && ( */}
+      {totalPages > 1 && courts.length > 0 && (
         <div className="flex justify-center space-x-2">
           <Button disabled={page === 0} onClick={() => setPage(prev => prev - 1)}>Anterior</Button>
           <span>Página {page + 1} de {totalPages}</span>
           <Button disabled={page + 1 >= totalPages} onClick={() => setPage(prev => prev + 1)}>Próxima</Button>
         </div>
-      {/* )} */}
+      )}
 
       <CreateCourtDialog
         open={openDialog}
