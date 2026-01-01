@@ -3,4 +3,5 @@ export interface Attendance {
   user_id: string;
   nome: string | null;
   position: number | null;
+  photo_url: string | null;
 }
