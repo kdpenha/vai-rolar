@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Button } from './ui/button';
 
@@ -13,6 +12,7 @@ export default function Changelog({ closeModal }: { closeModal: () => void }) {
             <ul className="text-sm space-y-2">
               <li>• Agora é possível definir sua posição na parte de perfil</li>
               <li>• Criador da pelada aparece no Card</li>
+              <li>• Fotos de perfil agora são permitidas</li>
             </ul>
 
             <DialogHeader>

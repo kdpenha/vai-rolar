@@ -26,8 +26,13 @@ export default function AttendeesDialog({ attendances, open, onOpenChange }: Pro
           <ul className="space-y-2">
             {attendances.map((a) => (
               <li key={a.user_id} className="flex items-center gap-3 p-2 rounded-lg bg-muted/50">
-                <div className="bg-primary/10 rounded-full p-2">
-                  <User className="h-4 w-4 text-primary" />
+                <div className="bg-primary/10 rounded-full overflow-hidden h-8 w-8">
+                  {a.photo_url ? (
+                    <img src={a.photo_url} alt="Foto de Perfil" className='h-full w-full object-cover'/>
+                  )
+                  : (
+                    <User className="h-8 w-8 text-primary p-2" />
+                  )}
                 </div>
                 <span>{a.nome || 'Usuário'} <span className="border border-orange-500 text-xs font-medium px-1 py-1 rounded-sm bg-fuchsia-900">{positions[a.position - 1]}</span></span>
               </li>

@@ -18,7 +18,7 @@ export default function Home() {
   const [createOpen, setCreateOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [ showChangelog, setShowChangelog ] = useState(false)
-  const CHANGELOG_VERSION = '31-12-20251';
+  const CHANGELOG_VERSION = '1';
 
   useEffect(() => {
     const seen = localStorage.getItem('changelog_seen');
