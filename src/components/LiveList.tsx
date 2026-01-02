@@ -46,7 +46,8 @@ export default function CourtsList() {
         court_id: a.court_id,
         user_id: a.user_id,
         nome: profileMap.get(a.user_id)?.nome || null,
-        position: profileMap.get(a.user_id)?.position || null
+        position: profileMap.get(a.user_id)?.position || null,
+        photo_url: profileMap.get(a.user_id)?.photo_url || null
       })));
     }
 
